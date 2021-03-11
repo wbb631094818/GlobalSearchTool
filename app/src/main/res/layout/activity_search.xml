@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="searchInfo"
+            type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/search_bg"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <EditText
+                android:lines="1"
+                android:inputType="text"
+                android:imeOptions="actionGo"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:id="@+id/search_et"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:hint="输入应用名称" />
+
+
+            <View
+                android:layout_marginTop="48dp"
+                android:background="#999999"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_rlv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp" />
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+</layout>
