@@ -1,5 +1,6 @@
 package com.zhongyong.globalsearchtool.utils
 
+import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -45,9 +46,17 @@ object Utils {
     fun showKeyboard(view: View) {
         val imm: InputMethodManager = view.getContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        if (imm != null) {
-            view.requestFocus()
-            imm.showSoftInput(view, 0)
-        }
+        view.requestFocus()
+        imm.showSoftInput(view, 0)
+    }
+
+    fun hideKeyBoard(view: View) {
+        val imm: InputMethodManager = view.getContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        view.requestFocus()
+        val activity = view.context as Activity;
+        imm.hideSoftInputFromWindow(activity.getCurrentFocus()?.getWindowToken(),
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 }

@@ -34,6 +34,10 @@ class SearchInfo {
 
     @ColumnInfo(name = "type")
     var type = ""; // type  app 为打开app   web 打开网页   calculator 计算器
+
+    var webUrl:String = "";
+
+    var webClass = ""; // 打开浏览器对应的activity
     
 //    @ColumnInfo(name = "icon")
 //    var icon: Drawable? = null; // 图标

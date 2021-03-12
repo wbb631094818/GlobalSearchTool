@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+      <variable
+          name="info"
+          type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
+    </data>
+    <LinearLayout
+        android:background="#66ffffff"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--  大小写忽略-->
+        <FrameLayout
+            android:id="@+id/case_click"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:text="是否忽略大小写\n 默认忽略"
+                android:layout_marginEnd="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.SwitchCompat
+                android:checked="true"
+                android:clickable="false"
+                android:id="@+id/case_switch"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+        <View
+            android:background="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <!--  拼音搜索-->
+        <FrameLayout
+            android:id="@+id/pinyin_click"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:text="是否支持拼音搜索\n 默认支持"
+                android:layout_marginEnd="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.SwitchCompat
+                android:checked="true"
+                android:id="@+id/pinyin_switch"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+        <View
+            android:background="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <!--  默认搜索引擎-->
+        <FrameLayout
+            android:id="@+id/search_engine_click"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:text="默认搜索引擎\n 当前百度"
+                android:layout_marginEnd="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/search_engine_spinner"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+        <View
+            android:background="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/share_click"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical"
+            android:text="分享"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+        <View
+            android:background="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/about_click"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical"
+            android:text="关于"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
+    </LinearLayout>
+
+</layout>

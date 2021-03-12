@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
@@ -15,6 +17,28 @@ import com.zhongyong.globalsearchtool.search.bean.SearchInfo
  */
 public object AppUtils {
 
+
+    /**
+     *  打开浏览器
+     */
+    public fun openWeb(context: Context, url: String){
+        val uri: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    /**
+     * 打开浏览器
+     */
+    public fun openWeb(context: Context,packageName: String, className:String,url: String){
+        val uri: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.setClassName(packageName,className);
+        context.startActivity(intent)
+
+    }
 
     /**
      *  通过包名，打开APP
@@ -43,7 +67,7 @@ public object AppUtils {
 //                val icon = info.applicationInfo.loadIcon(context.getPackageManager());
                 val name = context.getPackageManager().getApplicationLabel(info.applicationInfo)
                     .toString();
-                val pinyin = Pinyin.toPinyin(name,"")
+                val pinyin = Pinyin.toPinyin(name, "")
 //                Log.e("wbb", "pinyin: " +pinyin)
                 searchInfo = SearchInfo();
                 searchInfo.name = name;
@@ -55,7 +79,40 @@ public object AppUtils {
             }
         } catch (t: Throwable) {
             t.printStackTrace()
-            Log.e("wbb", "getPkgListNew: " + t.message)
+//            Log.e("wbb", "getPkgListNew: " + t.message)
+        }
+        return packages
+    }
+
+    /**
+     * 获取系统安装的所有的浏览器应用
+     *
+     * @param context
+     */
+    fun getAllBrows(context: Context?, searchText:String) : List<SearchInfo>{
+        val packages: MutableList<SearchInfo> = ArrayList()
+        val uri = Uri.parse("http://www.baidu.com")
+        val it = Intent(Intent.ACTION_VIEW, uri)
+        // 通过查询，获得所有ResolveInfo对象.
+        val resolveInfos:List<ResolveInfo> = context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        var searchInfo:SearchInfo;
+        val lastBrowser = AppPreferencesUtils.getLastDefultBrowser();
+        for (resolveInfo in resolveInfos) {
+            val name = context.getPackageManager().getApplicationLabel(resolveInfo.activityInfo.applicationInfo)
+                .toString();
+//            val pinyin = Pinyin.toPinyin(name, "")
+            searchInfo = SearchInfo();
+            searchInfo.webUrl = "https://m.baidu.com/s?word="+searchText;
+            searchInfo.name = "使用"+name+"百度搜索: "+searchText;
+            searchInfo.packageId = resolveInfo.activityInfo.packageName;
+//            searchInfo.pinyin = pinyin;
+            searchInfo.type = "web";
+            searchInfo.webClass = resolveInfo.activityInfo.name
+            if (searchInfo.packageId.equals(lastBrowser)){
+                packages.add(0,searchInfo)
+            }else {
+                packages.add(searchInfo)
+            }
         }
         return packages
     }

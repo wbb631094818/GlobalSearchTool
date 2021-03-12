@@ -2,4 +2,13 @@
     <string name="app_name">GlobalSearchTool</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string-array name="search_engine_list">
+        <item>百度</item>
+        <item>谷歌</item>
+        <item>必应</item>
+        <item>搜狗</item>
+        <!--        https://www.so.com/s?q=36-->
+        <item>360</item>
+    </string-array>
 </resources>

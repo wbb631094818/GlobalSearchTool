@@ -1,31 +1,28 @@
 package com.zhongyong.globalsearchtool.search
 
-import android.content.IntentFilter
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Filter
-import android.widget.Filterable
+import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.zhongyong.globalsearchtool.R
-import com.zhongyong.globalsearchtool.databinding.ActivitySearchBinding
 import com.zhongyong.globalsearchtool.db.AppDatabase
 import com.zhongyong.globalsearchtool.db.DbManager.updateDbData
-import com.zhongyong.globalsearchtool.receiver.AppBootReceiver
 import com.zhongyong.globalsearchtool.search.`interface`.SearchFilterInterface
 import com.zhongyong.globalsearchtool.search.adapter.SearchAdapter
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.search.filter.SearchFilter
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
+import com.zhongyong.globalsearchtool.setting.SettingActivity
 import com.zhongyong.globalsearchtool.utils.Utils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -36,6 +33,7 @@ import kotlin.collections.ArrayList
 class SearchActivity: AppCompatActivity() , Filterable {
 
     private var searchAdapter: SearchAdapter? = null;
+    private var searchEt:EditText? = null;
     // 所有的APP数据
     private var info = ArrayList<SearchInfo>();
 
@@ -45,11 +43,12 @@ class SearchActivity: AppCompatActivity() , Filterable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.window.statusBarColor = ContextCompat.getColor(this, R.color.transparent_20)
-        val searchBinding:ActivitySearchBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_search
-        );
-        searchBinding.searchEt.addTextChangedListener(object : TextWatcher {
+        setContentView(R.layout.activity_search)
+        searchEt = findViewById<EditText>(R.id.search_et);
+        val searchRlv = findViewById<RecyclerView>(R.id.search_rlv);
+        val search_bg = findViewById<RelativeLayout>(R.id.search_bg);
+        val setting_click = findViewById<ImageView>(R.id.setting_click);
+        searchEt?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //输入后的监听
                 Log.e(
@@ -73,7 +72,7 @@ class SearchActivity: AppCompatActivity() , Filterable {
         })
 
         // 点击确定，选中第一个
-        searchBinding.searchEt.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        searchEt?.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                val searchInfos:ArrayList<SearchInfo>? = searchAdapter?.getAdapterData();
                 if (searchInfos != null) {
@@ -86,40 +85,38 @@ class SearchActivity: AppCompatActivity() , Filterable {
             true
         })
 
-        val linearLayoutManager = LinearLayoutManager(this);
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        searchBinding.searchRlv.layoutManager = linearLayoutManager
-        searchAdapter = SearchAdapter(this);
-        searchBinding.searchRlv.adapter = searchAdapter;
-
-        searchBinding.searchBg.setOnClickListener({
-            finish();
+        setting_click.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this,SettingActivity().javaClass);
+            this.startActivity(intent)
         })
 
-        // 展示软键盘
-        Utils.showKeyboard(searchBinding.searchEt)
+        val linearLayoutManager = LinearLayoutManager(this);
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        searchRlv.layoutManager = linearLayoutManager
+        searchAdapter = SearchAdapter(this);
+        searchRlv.adapter = searchAdapter;
+
+        search_bg.setOnClickListener({
+            finish();
+        })
 
         getAllAppInfo()
     }
 
     override fun onStart() {
         super.onStart()
-//        // 注册监听APP安装卸载的广播
-//        installedReceiver =  AppBootReceiver();
-//        val filter = IntentFilter();
-//        filter.addAction("android.intent.action.PACKAGE_ADDED");
-//        filter.addAction("android.intent.action.PACKAGE_REMOVED");
-//        filter.addDataScheme("package");
-//        this.registerReceiver(installedReceiver, filter);
+        // 展示软键盘
+        searchEt?.let { Utils.showKeyboard(it) }
+    }
 
+    override fun onStop() {
+        super.onStop()
+        searchEt?.let { Utils.hideKeyBoard(it) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
 //        // 注销广播
-//        installedReceiver.let {
-//            this.unregisterReceiver(it)
-//        }
     }
 
 
@@ -129,15 +126,7 @@ class SearchActivity: AppCompatActivity() , Filterable {
             info = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "appinfo").build().SearchInfoDao().loadAll() as ArrayList<SearchInfo>
             Log.e("wbb", "结束")
             info = updateDbData(info)
-        }.invokeOnCompletion {
-            // 子线程
-            Log.e("wbb", "invokeOnCompletion: ")
-            Handler(Looper.getMainLooper()).post {
-                Log.e("wbb", "size: " + info.size)
-            }
         }
-
-
     }
 
     override fun getFilter(): Filter {

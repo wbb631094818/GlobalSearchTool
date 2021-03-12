@@ -37,19 +37,18 @@
 <!--                <data android:scheme="package" />-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
-
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".search.SearchActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/SearchStyle"
+            android:windowSoftInputMode="stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".search.SearchActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/SearchStyle"
-            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".setting.SettingActivity" />
     </application>
 
 </manifest>

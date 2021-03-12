@@ -2,6 +2,7 @@ package com.zhongyong.globalsearchtool.application
 
 import android.app.Application
 import android.content.Context
+import android.os.Debug
 import com.tencent.mmkv.MMKV
 import com.zhongyong.globalsearchtool.db.DbManager
 

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
 
-    <data>
-        <variable
-            name="searchInfo"
-            type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
-    </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="searchInfo"-->
+<!--            type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />-->
+<!--    </data>-->
 
-    <FrameLayout
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/search_bg"
         android:background="@color/transparent"
         android:layout_width="match_parent"
@@ -34,6 +36,14 @@
                 android:background="@null"
                 android:hint="输入应用名称" />
 
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/setting_click"
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="end"
+                android:layout_width="32dp"
+                android:layout_height="32dp"/>
+
 
             <View
                 android:layout_marginTop="48dp"
@@ -47,5 +57,5 @@
                 android:layout_marginTop="48dp" />
         </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
-</layout>
+    </RelativeLayout>
+<!--</layout>-->
