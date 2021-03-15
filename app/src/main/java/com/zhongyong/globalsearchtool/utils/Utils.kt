@@ -59,4 +59,14 @@ object Utils {
             InputMethodManager.HIDE_NOT_ALWAYS
         )
     }
+
+    /**
+     *  退回桌面
+     */
+    fun gotoDeskTop(context: Context){
+        val home = Intent(Intent.ACTION_MAIN)
+        home.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        home.addCategory(Intent.CATEGORY_HOME)
+        context.startActivity(home)
+    }
 }

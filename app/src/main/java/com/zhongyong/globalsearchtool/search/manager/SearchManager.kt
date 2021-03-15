@@ -1,6 +1,5 @@
 package com.zhongyong.globalsearchtool.search.manager
 
-import android.app.Activity
 import android.content.Context
 import com.zhongyong.globalsearchtool.application.SearchApplication
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
@@ -23,8 +22,8 @@ object SearchManager {
         }
 
         // 跳转后结束搜索页面
-        val activity = context as Activity;
-        activity.finish()
+//        val activity = context as Activity;
+//        activity.finish()
     }
 
 

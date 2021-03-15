@@ -3,6 +3,7 @@ package com.zhongyong.globalsearchtool.search.adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.zhongyong.globalsearchtool.search.adapter.base.BaseRecycleAdapter
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.utils.AppUtils
+import com.zhongyong.globalsearchtool.utils.Utils
 
 /**
  *  搜索适配器

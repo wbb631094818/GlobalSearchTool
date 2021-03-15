@@ -30,6 +30,6 @@ public class SearchApplication:Application(){
 
         MMKV.initialize(this)
         // 初始化数据库
-        DbManager.initDbData()
+//        DbManager.initDbData()
     }
 }

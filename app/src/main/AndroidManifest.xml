@@ -38,10 +38,11 @@
 <!--            </intent-filter>-->
 <!--        </receiver>-->
         <activity
+            android:excludeFromRecents="true"
             android:name=".search.SearchActivity"
             android:launchMode="singleTop"
             android:theme="@style/SearchStyle"
-            android:windowSoftInputMode="stateVisible" >
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

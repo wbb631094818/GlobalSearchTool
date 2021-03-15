@@ -2,21 +2,27 @@ package com.zhongyong.globalsearchtool.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.zhongyong.globalsearchtool.R
 import com.zhongyong.globalsearchtool.db.AppDatabase
+import com.zhongyong.globalsearchtool.db.DbManager
 import com.zhongyong.globalsearchtool.db.DbManager.updateDbData
+import com.zhongyong.globalsearchtool.lrucache.CacheAppManager
 import com.zhongyong.globalsearchtool.search.`interface`.SearchFilterInterface
 import com.zhongyong.globalsearchtool.search.adapter.SearchAdapter
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
@@ -24,16 +30,16 @@ import com.zhongyong.globalsearchtool.search.filter.SearchFilter
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.setting.SettingActivity
 import com.zhongyong.globalsearchtool.utils.Utils
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SearchActivity: AppCompatActivity() , Filterable {
+class SearchActivity : AppCompatActivity(), Filterable {
 
     private var searchAdapter: SearchAdapter? = null;
-    private var searchEt:EditText? = null;
+    private var searchEt: EditText? = null;
+
     // 所有的APP数据
     private var info = ArrayList<SearchInfo>();
 
@@ -74,9 +80,10 @@ class SearchActivity: AppCompatActivity() , Filterable {
         // 点击确定，选中第一个
         searchEt?.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
-               val searchInfos:ArrayList<SearchInfo>? = searchAdapter?.getAdapterData();
+                val searchInfos: ArrayList<SearchInfo>? = searchAdapter?.getAdapterData();
                 if (searchInfos != null) {
-                    if (searchInfos.size>0){
+                    if (searchInfos.size > 0) {
+                        searchEt?.text = Editable.Factory.getInstance().newEditable("")
                         SearchManager.searchItemClick(this, searchInfos[0])
                         return@OnEditorActionListener false
                     }
@@ -86,7 +93,7 @@ class SearchActivity: AppCompatActivity() , Filterable {
         })
 
         setting_click.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,SettingActivity().javaClass);
+            val intent = Intent(this, SettingActivity().javaClass);
             this.startActivity(intent)
         })
 
@@ -95,38 +102,29 @@ class SearchActivity: AppCompatActivity() , Filterable {
         searchRlv.layoutManager = linearLayoutManager
         searchAdapter = SearchAdapter(this);
         searchRlv.adapter = searchAdapter;
+        searchEt?.let {
+            it.requestFocus()
+        }
+
 
         search_bg.setOnClickListener({
-            finish();
+            searchEt?.text = Editable.Factory.getInstance().newEditable("")
+            Utils.gotoDeskTop(this)
         })
 
         getAllAppInfo()
-    }
 
-    override fun onStart() {
-        super.onStart()
-        // 展示软键盘
-        searchEt?.let { Utils.showKeyboard(it) }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        searchEt?.let { Utils.hideKeyBoard(it) }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        // 注销广播
     }
 
 
-    private fun getAllAppInfo(){
-        GlobalScope.launch {
+    private fun getAllAppInfo() {
+        lifecycleScope.launch {
             Log.e("wbb", "开始: ")
-            info = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "appinfo").build().SearchInfoDao().loadAll() as ArrayList<SearchInfo>
+            info = DbManager.getAllAppData();
             Log.e("wbb", "结束")
             info = updateDbData(info)
         }
+        Log.e("wbb", "getAllAppInfo:================= ")
     }
 
     override fun getFilter(): Filter {
@@ -138,4 +136,15 @@ class SearchActivity: AppCompatActivity() , Filterable {
             }
         })
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            searchEt?.text = Editable.Factory.getInstance().newEditable("")
+            Utils.gotoDeskTop(this)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
 }

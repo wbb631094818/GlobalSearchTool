@@ -3,6 +3,7 @@ package com.zhongyong.globalsearchtool.db
 import android.util.Log
 import androidx.room.Room
 import com.zhongyong.globalsearchtool.application.SearchApplication
+import com.zhongyong.globalsearchtool.lrucache.CacheAppManager
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.utils.AppUtils
 import kotlinx.coroutines.GlobalScope
@@ -26,6 +27,7 @@ object DbManager {
                 val info = SearchApplication.getApplication()
                     ?.let { AppUtils.getPkgListNew(it) } as ArrayList<SearchInfo>
                 db.SearchInfoDao().insertAll(info)
+                CacheAppManager.get()?.put("app",info)
             }
         }
     }
@@ -37,14 +39,26 @@ object DbManager {
         // 获取现在本机上的APP数据
         val newInfos = SearchApplication.getApplication()
             ?.let { AppUtils.getPkgListNew(it) } as ArrayList<SearchInfo>
+        Log.e("wbb", "updateDbData: "+newInfos.size)
         if (newInfos.size != infos.size){
-            Log.e("wbb", "updateDbData: 删除原有数据")
+            Log.e("wbb", "updateDbData: 删除原有数据"+newInfos.size)
             // 删除原有数据，重新保存
             val db = SearchApplication.getApplication()
                 ?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build() }
             db?.SearchInfoDao()?.deleteAll()
             db?.SearchInfoDao()?.insertAll(newInfos)
+            CacheAppManager.get()?.put("app",newInfos)
         }
         return newInfos;
+    }
+
+    public suspend fun getAllAppData():ArrayList<SearchInfo>{
+        if (CacheAppManager.get()?.get("app")!=null){
+           return CacheAppManager.get()?.get("app")!!
+        }else{
+            val info = SearchApplication.getApplication()?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().loadAll() } as ArrayList<SearchInfo>
+            CacheAppManager.get()?.put("app",info)
+            return info
+        }
     }
 }

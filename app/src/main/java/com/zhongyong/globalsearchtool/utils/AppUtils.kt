@@ -79,7 +79,7 @@ public object AppUtils {
             }
         } catch (t: Throwable) {
             t.printStackTrace()
-//            Log.e("wbb", "getPkgListNew: " + t.message)
+            Log.e("wbb", "getPkgListNew: " + t.message)
         }
         return packages
     }
