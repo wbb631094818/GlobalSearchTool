@@ -69,4 +69,20 @@ object Utils {
         home.addCategory(Intent.CATEGORY_HOME)
         context.startActivity(home)
     }
+
+    /**
+     *  返回选择的默认搜索引擎
+     */
+    fun getSearchWebUrl(str:String?,searchText:String):String{
+        if ("谷歌".equals(str)){
+            return "https://www.google.com.hk/search?q="+searchText;
+        }else if ("必应".equals(str)){
+            return "https://cn.bing.com/search?q="+searchText;
+        }else if ("搜狗".equals(str)){
+            return "https://www.so.com/s?q="+searchText
+        }else{
+          // 百度
+           return "https://m.baidu.com/s?word="+searchText;
+        }
+    }
 }

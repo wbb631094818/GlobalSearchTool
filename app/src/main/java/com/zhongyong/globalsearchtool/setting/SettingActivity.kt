@@ -19,8 +19,8 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     lateinit var settingBinding:ActivitySettingBinding;
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         settingBinding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
 
 
@@ -28,7 +28,7 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
         settingBinding.pinyinSwitch.isChecked = AppPreferencesUtils.isOpenPinyin()
 
         // 初始化spinner,添加数据
-        ArrayAdapter.createFromResource(
+       val spinnerAdapter = ArrayAdapter.createFromResource(
             this,
             R.array.search_engine_list,
             android.R.layout.simple_spinner_item
@@ -58,11 +58,16 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
         })
 
         settingBinding.searchEngineSpinner.onItemSelectedListener = this;
+        settingBinding.searchEngineSpinner.setSelection(spinnerAdapter.getPosition(AppPreferencesUtils.getDefultSearchEngine()),true)
+
+        settingBinding.settingBack.setOnClickListener({
+            finish();
+        })
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
-         val name = parent.getItemAtPosition(pos) as String
+        val name = parent.getItemAtPosition(pos) as String
         AppPreferencesUtils.setDefultSearchEngine(name)
         Log.e("wbb", "onItemSelected: "+name)
     }

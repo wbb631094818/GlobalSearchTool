@@ -97,13 +97,14 @@ public object AppUtils {
         val resolveInfos:List<ResolveInfo> = context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
         var searchInfo:SearchInfo;
         val lastBrowser = AppPreferencesUtils.getLastDefultBrowser();
+        val defultSearchEngine: String? = AppPreferencesUtils.getDefultSearchEngine();
         for (resolveInfo in resolveInfos) {
             val name = context.getPackageManager().getApplicationLabel(resolveInfo.activityInfo.applicationInfo)
                 .toString();
 //            val pinyin = Pinyin.toPinyin(name, "")
             searchInfo = SearchInfo();
-            searchInfo.webUrl = "https://m.baidu.com/s?word="+searchText;
-            searchInfo.name = "使用"+name+"百度搜索: "+searchText;
+            searchInfo.webUrl = Utils.getSearchWebUrl(defultSearchEngine,searchText)
+            searchInfo.name = "使用"+name+defultSearchEngine+"搜索: "+searchText;
             searchInfo.packageId = resolveInfo.activityInfo.packageName;
 //            searchInfo.pinyin = pinyin;
             searchInfo.type = "web";

@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-      <variable
-          name="info"
-          type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
-    </data>
     <LinearLayout
         android:background="#66ffffff"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:background="@color/purple_500"
+            android:elevation="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <ImageView
+                android:id="@+id/setting_back"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginStart="4dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:layout_marginStart="72dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="设置"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
         <!--  大小写忽略-->
         <FrameLayout
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginTop="8dp"
             android:id="@+id/case_click"
             android:layout_width="match_parent"
             android:layout_height="48dp">
@@ -24,7 +44,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.SwitchCompat
-                android:checked="true"
                 android:clickable="false"
                 android:id="@+id/case_switch"
                 android:layout_marginEnd="16dp"
@@ -33,12 +52,9 @@
                 android:layout_height="wrap_content"/>
         </FrameLayout>
 
-        <View
-            android:background="#999999"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
         <!--  拼音搜索-->
         <FrameLayout
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/pinyin_click"
             android:layout_width="match_parent"
             android:layout_height="48dp">
@@ -50,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.SwitchCompat
-                android:checked="true"
+                android:clickable="false"
                 android:id="@+id/pinyin_switch"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical|end"
@@ -58,17 +74,14 @@
                 android:layout_height="wrap_content"/>
         </FrameLayout>
 
-        <View
-            android:background="#999999"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
         <!--  默认搜索引擎-->
         <FrameLayout
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/search_engine_click"
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:text="默认搜索引擎\n 当前百度"
+                android:text="默认搜索引擎"
                 android:layout_marginEnd="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
@@ -81,22 +94,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
-        <View
-            android:background="#999999"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+
         <TextView
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/share_click"
             android:paddingStart="16dp"
             android:gravity="center_vertical"
             android:text="分享"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
-        <View
-            android:background="#999999"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
         <TextView
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/about_click"
             android:paddingStart="16dp"
             android:gravity="center_vertical"

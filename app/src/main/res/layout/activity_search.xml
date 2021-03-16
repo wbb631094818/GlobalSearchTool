@@ -37,24 +37,25 @@
                 android:hint="输入应用名称" />
 
             <ImageView
-                android:visibility="gone"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="10dp"
                 android:id="@+id/setting_click"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/ic_setting"
                 android:layout_gravity="end"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
 
 
             <View
                 android:layout_marginTop="48dp"
-                android:background="#999999"
+                android:background="#cccccc"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_rlv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="48dp" />
+                android:layout_marginTop="49dp" />
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>

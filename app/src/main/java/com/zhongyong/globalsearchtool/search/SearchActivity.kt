@@ -30,6 +30,7 @@ import com.zhongyong.globalsearchtool.search.filter.SearchFilter
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.setting.SettingActivity
 import com.zhongyong.globalsearchtool.utils.Utils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
@@ -118,8 +119,8 @@ class SearchActivity : AppCompatActivity(), Filterable {
 
 
     private fun getAllAppInfo() {
-        lifecycleScope.launch {
-            Log.e("wbb", "开始: ")
+        lifecycleScope.launch(Dispatchers.IO) {
+            Log.e("wbb", "开始: "+android.os.Process.myTid())
             info = DbManager.getAllAppData();
             Log.e("wbb", "结束")
             info = updateDbData(info)
