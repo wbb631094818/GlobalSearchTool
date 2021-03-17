@@ -120,7 +120,7 @@ class SearchActivity : AppCompatActivity(), Filterable {
 
     private fun getAllAppInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.e("wbb", "开始: "+android.os.Process.myTid())
+            Log.e("wbb", "开始: ")
             info = DbManager.getAllAppData();
             Log.e("wbb", "结束")
             info = updateDbData(info)

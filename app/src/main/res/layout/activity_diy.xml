@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:background="@color/purple_500"
+            android:elevation="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <ImageView
+                android:id="@+id/diy_back"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginStart="4dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:layout_marginStart="72dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="自定义设置"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/diy_add"
+                android:padding="10dp"
+                android:src="@drawable/ic_add"
+                android:layout_gravity="end"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/diy_rlv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

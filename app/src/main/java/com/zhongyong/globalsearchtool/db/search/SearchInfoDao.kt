@@ -11,6 +11,12 @@ public interface SearchInfoDao {
     @Query("SELECT * FROM appinfo")
     suspend fun loadAll():List<SearchInfo>;
 
+    @Query("SELECT * FROM APPINFO WHERE isDiy = 1")
+    suspend fun getAllDiyData():List<SearchInfo>
+
+    @Query("SELECT * FROM APPINFO WHERE isDiy = 0")
+    suspend fun getAllAppData():List<SearchInfo>
+
     @Insert(entity = SearchInfo::class)
     suspend fun insertAll(searchInfo: ArrayList<SearchInfo>)
 

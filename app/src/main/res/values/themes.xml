@@ -25,4 +25,6 @@
 
     </style>
 
+    <style name="dialog" parent="Theme.AppCompat.Dialog"></style>
+
 </resources>

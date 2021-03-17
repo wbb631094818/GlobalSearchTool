@@ -1,5 +1,6 @@
 package com.zhongyong.globalsearchtool.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.zhongyong.globalsearchtool.R
 import com.zhongyong.globalsearchtool.databinding.ActivitySettingBinding
+import com.zhongyong.globalsearchtool.diy.DiyActivity
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
 
 /**
@@ -62,6 +64,11 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         settingBinding.settingBack.setOnClickListener({
             finish();
+        })
+        settingBinding.addDiyClick.setOnClickListener({
+            // 去自定义设置网页页面
+            val intent = Intent(this,DiyActivity::class.java)
+            startActivity(intent)
         })
     }
 

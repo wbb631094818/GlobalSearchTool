@@ -56,9 +56,16 @@ object DbManager {
         if (CacheAppManager.get()?.get("app")!=null){
            return CacheAppManager.get()?.get("app")!!
         }else{
-            val info = SearchApplication.getApplication()?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().loadAll() } as ArrayList<SearchInfo>
+            val info = SearchApplication.getApplication()?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().getAllAppData() } as ArrayList<SearchInfo>
             CacheAppManager.get()?.put("app",info)
             return info
         }
+    }
+
+    /**
+     *  获取所有自定义数据
+     */
+    public suspend fun getAllDiyData():ArrayList<SearchInfo>{
+        return SearchApplication.getApplication()?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().getAllDiyData() } as ArrayList<SearchInfo>
     }
 }

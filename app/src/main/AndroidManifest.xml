@@ -51,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".diy.DiyActivity" />
     </application>
 
 </manifest>

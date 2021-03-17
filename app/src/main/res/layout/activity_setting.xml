@@ -94,7 +94,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
-
+        <TextView
+            android:background="?android:attr/selectableItemBackground"
+            android:id="@+id/add_diy_click"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical"
+            android:text="添加自定义打开网址"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
         <TextView
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/share_click"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="info"
+            type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
+    </data>
+
+    <LinearLayout
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="221dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="网站名称">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/diy_title"
+                android:text="@{info.name}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="网站介绍">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/diy_info"
+                android:text="@{info.appInfo}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="网址">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/diy_weburl"
+                android:text="@{info.webUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/diy_add_click"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/purple_700"
+            android:text="添加"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</layout>

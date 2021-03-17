@@ -38,7 +38,9 @@ class SearchInfo {
     var webUrl:String = "";
 
     var webClass = ""; // 打开浏览器对应的activity
-    
+
+    @ColumnInfo(name = "isDiy")
+    var diy = 0; // 是否是用户自己添加的？  0 不是---默认  1 是
 //    @ColumnInfo(name = "icon")
 //    var icon: Drawable? = null; // 图标
 
