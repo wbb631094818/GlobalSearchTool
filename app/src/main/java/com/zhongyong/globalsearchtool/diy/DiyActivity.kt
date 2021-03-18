@@ -42,7 +42,6 @@ class DiyActivity : AppCompatActivity() {
         activityDiyBinding.diyAdd.setOnClickListener({
             // 添加数据
             AddDiyDialog.showDialog(this)
-
         })
 
         getAllAppInfo()

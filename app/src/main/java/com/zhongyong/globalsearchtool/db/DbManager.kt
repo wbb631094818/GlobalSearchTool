@@ -1,6 +1,7 @@
 package com.zhongyong.globalsearchtool.db
 
 import android.util.Log
+import androidx.core.util.lruCache
 import androidx.room.Room
 import com.zhongyong.globalsearchtool.application.SearchApplication
 import com.zhongyong.globalsearchtool.lrucache.CacheAppManager
@@ -47,7 +48,9 @@ object DbManager {
                 ?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build() }
             db?.SearchInfoDao()?.deleteNoDiyAll()
             db?.SearchInfoDao()?.insertAll(newInfos)
-            CacheAppManager.get()?.put("app",newInfos)
+            CacheAppManager.get()?.put("app",
+                db?.SearchInfoDao()?.getAllAppData() as ArrayList<SearchInfo>
+            )
         }
         return newInfos;
     }
@@ -80,5 +83,22 @@ object DbManager {
      */
     public suspend fun getAllDiyData():ArrayList<SearchInfo>{
         return SearchApplication.getApplication()?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().getAllDiyData() } as ArrayList<SearchInfo>
+    }
+
+    /**
+     *  添加自定义数据
+     */
+    public suspend fun addDiyData(searchInfo: SearchInfo){
+        SearchApplication.getApplication()?.let {
+            Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().insert(searchInfo)
+        }
+        CacheAppManager.get()?.get("app")?.add(0,searchInfo)
+
+    }
+
+    suspend fun delDiyData(name: String){
+        SearchApplication.getApplication()?.let {
+            Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().deleteDiyData(name)
+        }
     }
 }

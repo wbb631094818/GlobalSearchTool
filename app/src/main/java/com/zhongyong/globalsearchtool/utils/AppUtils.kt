@@ -118,6 +118,32 @@ public object AppUtils {
         }
         return packages
     }
+    /**
+     * 获取系统安装的所有的浏览器应用
+     *
+     * @param context
+     */
+    fun getAllBrows(context: Context?) : List<SearchInfo>{
+        val packages: MutableList<SearchInfo> = ArrayList()
+        val uri = Uri.parse("http://www.baidu.com")
+        val it = Intent(Intent.ACTION_VIEW, uri)
+        // 通过查询，获得所有ResolveInfo对象.
+        val resolveInfos:List<ResolveInfo> = context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        var searchInfo:SearchInfo;
+        for (resolveInfo in resolveInfos) {
+            val name = context.getPackageManager().getApplicationLabel(resolveInfo.activityInfo.applicationInfo)
+                .toString();
+//            val pinyin = Pinyin.toPinyin(name, "")
+            searchInfo = SearchInfo();
+            searchInfo.packageId = resolveInfo.activityInfo.packageName;
+//            searchInfo.pinyin = pinyin;
+            searchInfo.name = name;
+            searchInfo.type = "web";
+            searchInfo.webClass = resolveInfo.activityInfo.name
+            packages.add(searchInfo)
+        }
+        return packages
+    }
 
 
     public fun getIcon(mContext: Context, pakgename: String): Drawable? {

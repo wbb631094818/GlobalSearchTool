@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="info"
             type="com.zhongyong.globalsearchtool.search.bean.SearchInfo" />
     </data>
 
     <LinearLayout
-        android:layout_marginBottom="24dp"
         android:layout_width="match_parent"
-        android:layout_height="221dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -20,12 +22,16 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:hint="网站名称">
+
             <androidx.appcompat.widget.AppCompatEditText
+                android:layout_gravity="bottom"
                 android:id="@+id/diy_title"
-                android:text="@{info.name}"
                 android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:text="@={info.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -36,9 +42,10 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/diy_info"
-                android:text="@{info.appInfo}"
                 android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:text="@={info.appInfo}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,10 +56,16 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/diy_weburl"
-                android:text="@{info.webUrl}"
                 android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:text="@={info.webUrl}" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/diy_app_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/diy_add_click"

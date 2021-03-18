@@ -1,6 +1,7 @@
 package com.zhongyong.globalsearchtool.search.manager
 
 import android.content.Context
+import android.util.Log
 import com.zhongyong.globalsearchtool.application.SearchApplication
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
@@ -21,6 +22,7 @@ object SearchManager {
             AppPreferencesUtils.setLastDefultBrowser(searchInfo.packageId)
         }
 
+        Log.e("wbb", "searchItemClick: "+searchInfo.type)
         // 跳转后结束搜索页面
 //        val activity = context as Activity;
 //        activity.finish()
