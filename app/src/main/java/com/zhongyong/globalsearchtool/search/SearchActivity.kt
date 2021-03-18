@@ -29,6 +29,7 @@ import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.search.filter.SearchFilter
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.setting.SettingActivity
+import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
 import com.zhongyong.globalsearchtool.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -113,8 +114,11 @@ class SearchActivity : AppCompatActivity(), Filterable {
             Utils.gotoDeskTop(this)
         })
 
-        getAllAppInfo()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        getAllAppInfo()
     }
 
 
@@ -123,9 +127,10 @@ class SearchActivity : AppCompatActivity(), Filterable {
             Log.e("wbb", "开始: ")
             info = DbManager.getAllAppData();
             Log.e("wbb", "结束")
-            info = updateDbData(info)
+            if (AppPreferencesUtils.isAppAutoUpdate()){
+                info = updateDbData(info)
+            }
         }
-        Log.e("wbb", "getAllAppInfo:================= ")
     }
 
     override fun getFilter(): Filter {

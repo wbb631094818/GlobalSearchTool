@@ -102,6 +102,35 @@
             android:text="添加自定义打开网址"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
+        <!--  本地app数据自动更新 -->
+        <FrameLayout
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/app_update_open_click"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:text="打开本地app数据自动更新,每次打开搜索页面时更新"
+                android:layout_marginEnd="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.SwitchCompat
+                android:clickable="false"
+                android:id="@+id/app_update_switch"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+        <TextView
+            android:background="?android:attr/selectableItemBackground"
+            android:id="@+id/update_app_click"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical"
+            android:text="更新本地App数据"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
         <TextView
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/share_click"

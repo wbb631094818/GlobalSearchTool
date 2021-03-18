@@ -29,6 +29,9 @@ public interface SearchInfoDao {
     @Query("delete from appinfo")
     suspend fun deleteAll()
 
+    @Query("delete from appinfo WHERE isDiy = 0")
+    suspend fun deleteNoDiyAll()
+
     @Update
     suspend fun update(searchInfo: SearchInfo)
 

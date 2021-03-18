@@ -38,4 +38,12 @@ object AppPreferencesUtils {
         MMKV.defaultMMKV()?.encode("LastDefultBrowser",value)
     }
 
+    public fun isAppAutoUpdate(): Boolean{
+        return MMKV.defaultMMKV()?.decodeBool("AppAutoUpdate",true) == true
+    }
+
+    public fun setAppAutoUpdate(value:Boolean){
+        MMKV.defaultMMKV()?.encode("AppAutoUpdate",value)
+    }
+
 }

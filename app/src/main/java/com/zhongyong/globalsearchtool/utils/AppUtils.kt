@@ -75,6 +75,7 @@ public object AppUtils {
                 searchInfo.appInfo = "版本:" + info.versionName;
                 searchInfo.pinyin = pinyin;
                 searchInfo.type = "app";
+                searchInfo.diy = 0;
                 packages.add(searchInfo)
             }
         } catch (t: Throwable) {

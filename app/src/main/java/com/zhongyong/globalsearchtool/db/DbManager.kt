@@ -45,11 +45,24 @@ object DbManager {
             // 删除原有数据，重新保存
             val db = SearchApplication.getApplication()
                 ?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build() }
-            db?.SearchInfoDao()?.deleteAll()
+            db?.SearchInfoDao()?.deleteNoDiyAll()
             db?.SearchInfoDao()?.insertAll(newInfos)
             CacheAppManager.get()?.put("app",newInfos)
         }
         return newInfos;
+    }
+
+    public suspend fun updateDbData(){
+        // 获取现在本机上的APP数据
+        val newInfos = SearchApplication.getApplication()
+            ?.let { AppUtils.getPkgListNew(it) } as ArrayList<SearchInfo>
+        Log.e("wbb", "updateDbData: "+newInfos.size)
+        // 删除原有数据，重新保存
+        val db = SearchApplication.getApplication()
+            ?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build() }
+        db?.SearchInfoDao()?.deleteNoDiyAll()
+        db?.SearchInfoDao()?.insertAll(newInfos)
+        CacheAppManager.get()?.put("app",newInfos)
     }
 
     public suspend fun getAllAppData():ArrayList<SearchInfo>{
