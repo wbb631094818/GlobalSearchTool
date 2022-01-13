@@ -6,6 +6,7 @@ import com.zhongyong.globalsearchtool.search.`interface`.SearchFilterInterface
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
+import com.zhongyong.globalsearchtool.utils.LogUtils
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,15 +39,16 @@ class SearchFilter(infos: ArrayList<SearchInfo>, callBack: SearchFilterInterface
                 var name = bean.name;
                 // 是否区分大小写
                 if (isOpenCase) {
-                    name = name.toLowerCase(Locale.CHINA);
-                    filterStr = filterStr.toLowerCase(Locale.CHINA);
+                    name = name.lowercase(Locale.getDefault());
+                    filterStr = filterStr.lowercase(Locale.getDefault());
                 }
-                if (name.contains(filterStr) || (isOpenPinyin && bean.pinyin.contains(filterStr.toUpperCase(Locale.CHINA)))) {
+                LogUtils.e("name: $name  filterStr: $filterStr")
+                if (name.contains(filterStr) || name.equals(filterStr) || (isOpenPinyin && bean.pinyin.contains(filterStr.uppercase(Locale.getDefault())))) {
                     mFilterBeans.add(bean)
                 }
             }
             if (mFilterBeans.size <= 0) {
-                Log.e("wbb", "performFiltering: =================")
+                LogUtils.e("performFiltering: =================")
                 SearchManager.addWebSearch(filterStr, mFilterBeans)
             }
         }

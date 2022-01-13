@@ -6,6 +6,7 @@ import com.zhongyong.globalsearchtool.application.SearchApplication
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
 import com.zhongyong.globalsearchtool.utils.AppUtils
+import com.zhongyong.globalsearchtool.utils.LogUtils
 
 /**
  *  搜索相关的
@@ -22,7 +23,7 @@ object SearchManager {
             AppPreferencesUtils.setLastDefultBrowser(searchInfo.packageId)
         }
 
-        Log.e("wbb", "searchItemClick: "+searchInfo.type)
+        LogUtils.e( "searchItemClick: "+searchInfo.type)
         // 跳转后结束搜索页面
 //        val activity = context as Activity;
 //        activity.finish()
@@ -30,7 +31,8 @@ object SearchManager {
 
 
     public fun addWebSearch(searchText:String,infos:ArrayList<SearchInfo>){
-        infos.addAll(AppUtils.getAllBrows(SearchApplication.getApplication(),searchText))
+        SearchApplication.getApplication()?.let { AppUtils.getAllBrows(it,searchText) }
+            ?.let { infos.addAll(it) }
     }
 
 }

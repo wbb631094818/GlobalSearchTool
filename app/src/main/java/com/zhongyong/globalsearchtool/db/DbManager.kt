@@ -7,6 +7,7 @@ import com.zhongyong.globalsearchtool.application.SearchApplication
 import com.zhongyong.globalsearchtool.lrucache.CacheAppManager
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.utils.AppUtils
+import com.zhongyong.globalsearchtool.utils.LogUtils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.ArrayList
@@ -38,11 +39,11 @@ object DbManager {
      */
     public suspend fun updateDbData(infos: ArrayList<SearchInfo>): ArrayList<SearchInfo> {
         // 获取现在本机上的APP数据
-        val newInfos = SearchApplication.getApplication()
+        var newInfos = SearchApplication.getApplication()
             ?.let { AppUtils.getPkgListNew(it) } as ArrayList<SearchInfo>
-        Log.e("wbb", "updateDbData: "+newInfos.size)
+        LogUtils.e("updateDbData: "+newInfos.size)
         if (newInfos.size != infos.size){
-            Log.e("wbb", "updateDbData: 删除原有数据"+newInfos.size)
+            LogUtils.e("updateDbData: 删除原有数据"+newInfos.size)
             // 删除原有数据，重新保存
             val db = SearchApplication.getApplication()
                 ?.let { Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build() }
@@ -51,6 +52,7 @@ object DbManager {
             CacheAppManager.get()?.put("app",
                 db?.SearchInfoDao()?.getAllAppData() as ArrayList<SearchInfo>
             )
+            newInfos = getAllAppData();
         }
         return newInfos;
     }
@@ -93,7 +95,15 @@ object DbManager {
             Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().insert(searchInfo)
         }
         CacheAppManager.get()?.get("app")?.add(0,searchInfo)
+    }
 
+    /**
+     *  更新数据
+     */
+    public suspend fun update(searchInfo: SearchInfo){
+        SearchApplication.getApplication()?.let {
+            Room.databaseBuilder(it, AppDatabase::class.java, "appinfo").build().SearchInfoDao().update(searchInfo)
+        }
     }
 
     suspend fun delDiyData(name: String){

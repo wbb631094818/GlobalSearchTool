@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.zhongyong.globalsearchtool.R
 import com.zhongyong.globalsearchtool.databinding.ItemDiyBinding
 import com.zhongyong.globalsearchtool.db.DbManager
+import com.zhongyong.globalsearchtool.diy.dialog.AddDiyDialog
 import com.zhongyong.globalsearchtool.search.adapter.base.BaseRecycleAdapter
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 import com.zhongyong.globalsearchtool.utils.AppUtils
@@ -32,7 +33,7 @@ class DiyAdapter(context: Context) : BaseRecycleAdapter<SearchInfo>(context) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as DiyHolder
-        val info = list[position]
+        var info = list[position]
         holder.getBinding().info = list[position];
 
         Glide
@@ -69,7 +70,13 @@ class DiyAdapter(context: Context) : BaseRecycleAdapter<SearchInfo>(context) {
                             }).show()
                     }else if ("编辑".equals(array[which])){
                         // 去编辑
+                        AddDiyDialog.showEditDialog(mContext,info,object :AddDiyDialog.AddDialogCallBack{
+                            override fun add(searchInfo: SearchInfo) {
+                                list[position] = searchInfo;
+                                notifyDataSetChanged();
+                            }
 
+                        })
                     }
                     dialog.dismiss()
                 }).show()

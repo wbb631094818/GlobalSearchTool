@@ -71,18 +71,31 @@ object Utils {
     }
 
     /**
-     *  返回选择的默认搜索引擎
+     *  获取浏览器显示名称
      */
-    fun getSearchWebUrl(str:String?,searchText:String):String{
-        if ("谷歌".equals(str)){
-            return "https://www.google.com.hk/search?q="+searchText;
-        }else if ("必应".equals(str)){
-            return "https://cn.bing.com/search?q="+searchText;
-        }else if ("搜狗".equals(str)){
-            return "https://www.so.com/s?q="+searchText
-        }else{
-          // 百度
-           return "https://m.baidu.com/s?word="+searchText;
+    public fun getSearchWebUrl(str:String?,searchText:String): String {
+        when (str) {
+            "1" -> {
+                return "https://www.google.com/search?q="+searchText;
+            }
+            "2" -> {
+                return "https://m.baidu.com/s?word="+searchText;
+            }
+            "3" -> {
+                return "https://www.bing.com/search?q="+searchText;
+            }
+            "4" -> {
+                return "https://www.sogou.com/web?query="+searchText;
+            }
+            "5" -> {
+                return "https://www.so.com/s?q="+searchText;
+            }
+            "6" -> {
+                return "https://www.youtube.com/results?search_query=$searchText"
+            }
+            else -> {
+                return "https://www.google.com/search?q="+searchText;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
+import com.zhongyong.globalsearchtool.R
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
 
 
@@ -90,14 +91,15 @@ public object AppUtils {
      *
      * @param context
      */
-    fun getAllBrows(context: Context?, searchText:String) : List<SearchInfo>{
+    fun getAllBrows(context: Context, searchText:String) : List<SearchInfo>{
         val packages: MutableList<SearchInfo> = ArrayList()
         val uri = Uri.parse("http://www.baidu.com")
         val it = Intent(Intent.ACTION_VIEW, uri)
         // 通过查询，获得所有ResolveInfo对象.
-        val resolveInfos:List<ResolveInfo> = context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        val resolveInfos:List<ResolveInfo> = context.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
         var searchInfo:SearchInfo;
-        val lastBrowser = AppPreferencesUtils.getLastDefultBrowser();
+        val lastBrowser = AppPreferencesUtils.getLastDefultBrowser()
+            ?.let { it1 -> AppUtils.getBrowserName(context, it1) };
         val defultSearchEngine: String? = AppPreferencesUtils.getDefultSearchEngine();
         for (resolveInfo in resolveInfos) {
             val name = context.getPackageManager().getApplicationLabel(resolveInfo.activityInfo.applicationInfo)
@@ -105,7 +107,11 @@ public object AppUtils {
 //            val pinyin = Pinyin.toPinyin(name, "")
             searchInfo = SearchInfo();
             searchInfo.webUrl = Utils.getSearchWebUrl(defultSearchEngine,searchText)
-            searchInfo.name = "使用"+name+defultSearchEngine+"搜索: "+searchText;
+            searchInfo.name = "使用"+name+ defultSearchEngine?.let { it1 ->
+                getBrowserName(context,
+                    it1
+                )
+            } +"搜索: "+searchText;
             searchInfo.packageId = resolveInfo.activityInfo.packageName;
 //            searchInfo.pinyin = pinyin;
             searchInfo.type = "web";
@@ -158,5 +164,34 @@ public object AppUtils {
             e.printStackTrace()
         }
         return null
+    }
+
+    /**
+     *  获取浏览器显示名称
+     */
+    public fun getBrowserName(mContext: Context, index: String): String {
+        when (index) {
+            "1" -> {
+                return mContext.resources.getString(R.string.google);
+            }
+            "2" -> {
+                return mContext.resources.getString(R.string.baidu);
+            }
+            "3" -> {
+                return mContext.resources.getString(R.string.bing);
+            }
+            "4" -> {
+                return mContext.resources.getString(R.string.sogou);
+            }
+            "5" -> {
+                return mContext.resources.getString(R.string.so360);
+            }
+            "6" -> {
+                return mContext.resources.getString(R.string.youtube);
+            }
+            else -> {
+                return mContext.resources.getString(R.string.google);
+            }
+        }
     }
 }

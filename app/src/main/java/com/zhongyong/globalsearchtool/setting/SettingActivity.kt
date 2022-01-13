@@ -3,12 +3,10 @@ package com.zhongyong.globalsearchtool.setting
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,8 +16,13 @@ import com.zhongyong.globalsearchtool.databinding.ActivitySettingBinding
 import com.zhongyong.globalsearchtool.db.DbManager
 import com.zhongyong.globalsearchtool.diy.DiyActivity
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
+import com.zhongyong.globalsearchtool.utils.AppUtils
+import com.zhongyong.globalsearchtool.utils.LogUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
+
 
 /**
  *  设置页面
@@ -30,24 +33,46 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settingBinding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
+        settingBinding = DataBindingUtil.setContentView(this, com.zhongyong.globalsearchtool.R.layout.activity_setting);
 
 
         settingBinding.caseSwitch.isChecked = AppPreferencesUtils.isOpenCase()
         settingBinding.pinyinSwitch.isChecked = AppPreferencesUtils.isOpenPinyin()
         settingBinding.appUpdateSwitch.isChecked = AppPreferencesUtils.isAppAutoUpdate();
 
-        // 初始化spinner,添加数据
-       val spinnerAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.search_engine_list,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            settingBinding.searchEngineSpinner.adapter = adapter
+        val browsNmaes: ArrayList<String> = ArrayList();
+        var position = 1;
+        lifecycleScope.launch(Dispatchers.IO) {
+           val category_names = resources.getStringArray(com.zhongyong.globalsearchtool.R.array.search_engine_list)
+
+            for ((index,info) in category_names.withIndex()) {
+                browsNmaes.add(AppUtils.getBrowserName(this@SettingActivity, info))
+            }
+            position = AppPreferencesUtils.getDefultSearchEngine()?.toInt() ?:1;
+            if (position>0){
+                position = position - 1;
+            }
+        }.invokeOnCompletion {
+            lifecycleScope.launch(Dispatchers.Main) {
+                val spinnerAdapter =
+                    ArrayAdapter<String>(this@SettingActivity, android.R.layout.simple_spinner_item, browsNmaes)
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                settingBinding.searchEngineSpinner.adapter = spinnerAdapter
+                settingBinding.searchEngineSpinner.setSelection(position,true);
+            }
         }
+        // 初始化spinner,添加数据
+//       val spinnerAdapter = ArrayAdapter.createFromResource(
+//            this,
+//            R.array.search_engine_list,
+//            android.R.layout.simple_spinner_item
+//        ).also { adapter ->
+//            // Specify the layout to use when the list of choices appears
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//            // Apply the adapter to the spinner
+//            settingBinding.searchEngineSpinner.adapter = adapter
+//        }
 
         settingBinding.caseClick.setOnClickListener({
             if (AppPreferencesUtils.isOpenCase()){
@@ -92,7 +117,7 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         settingBinding.searchEngineSpinner.onItemSelectedListener = this;
-        settingBinding.searchEngineSpinner.setSelection(spinnerAdapter.getPosition(AppPreferencesUtils.getDefultSearchEngine()),true)
+//        settingBinding.searchEngineSpinner.setSelection(spinnerAdapter.getPosition(AppPreferencesUtils.getDefultSearchEngine()),true)
 
         settingBinding.settingBack.setOnClickListener({
             finish();
@@ -102,13 +127,22 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val intent = Intent(this,DiyActivity::class.java)
             startActivity(intent)
         })
+        settingBinding.aboutClick.setOnClickListener({
+
+        })
+
+        if (Locale.getDefault() == Locale.CHINA || Locale.getDefault() == Locale.TAIWAN){
+            settingBinding.pinyinClick.visibility = View.VISIBLE;
+        }else{
+            settingBinding.pinyinClick.visibility = View.GONE;
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         val name = parent.getItemAtPosition(pos) as String
-        AppPreferencesUtils.setDefultSearchEngine(name)
-        Log.e("wbb", "onItemSelected: "+name)
+        AppPreferencesUtils.setDefultSearchEngine((pos+1).toString())
+        LogUtils.e("onItemSelected: "+(pos+1))
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

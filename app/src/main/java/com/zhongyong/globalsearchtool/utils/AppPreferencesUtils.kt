@@ -23,7 +23,7 @@ object AppPreferencesUtils {
 
 
     public fun getDefultSearchEngine(): String? {
-       return MMKV.defaultMMKV()?.decodeString("DefultSearchEngine","百度")
+       return MMKV.defaultMMKV()?.decodeString("DefultSearchEngine","1")
     }
 
     public fun setDefultSearchEngine(value:String){

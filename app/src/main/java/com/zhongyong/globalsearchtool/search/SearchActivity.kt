@@ -1,6 +1,7 @@
 package com.zhongyong.globalsearchtool.search
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,6 +31,7 @@ import com.zhongyong.globalsearchtool.search.filter.SearchFilter
 import com.zhongyong.globalsearchtool.search.manager.SearchManager
 import com.zhongyong.globalsearchtool.setting.SettingActivity
 import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
+import com.zhongyong.globalsearchtool.utils.LogUtils
 import com.zhongyong.globalsearchtool.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,7 +52,9 @@ class SearchActivity : AppCompatActivity(), Filterable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.window.statusBarColor = ContextCompat.getColor(this, R.color.transparent_20)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.window.statusBarColor = ContextCompat.getColor(this, R.color.transparent_20)
+        }
         setContentView(R.layout.activity_search)
         searchEt = findViewById<EditText>(R.id.search_et);
         val searchRlv = findViewById<RecyclerView>(R.id.search_rlv);
@@ -59,16 +63,14 @@ class SearchActivity : AppCompatActivity(), Filterable {
         searchEt?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //输入后的监听
-                Log.e(
-                    "wbb",
+                LogUtils.e(
                     "beforeTextChanged: CharSequence：" + s + "  start:" + start + " after:" + after
                 )
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //输入文字产生变化的监听
-                Log.e(
-                    "wbb",
+                LogUtils.e(
                     "onTextChanged: CharSequence：" + s + "  before:" + before + " count:" + count
                 )
             }
@@ -124,9 +126,10 @@ class SearchActivity : AppCompatActivity(), Filterable {
 
     private fun getAllAppInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.e("wbb", "开始: ")
+            LogUtils.e("开始");
             info = DbManager.getAllAppData();
-            Log.e("wbb", "结束")
+            LogUtils.e( "结束")
+            LogUtils.e(info[0].toString())
             if (AppPreferencesUtils.isAppAutoUpdate()){
                 info = updateDbData(info)
             }

@@ -16,7 +16,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:layout_marginStart="4dp"
                 android:layout_gravity="center_vertical"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_back"
                 android:layout_width="48dp"
                 android:layout_height="48dp"/>
@@ -25,7 +25,7 @@
                 android:layout_marginStart="72dp"
                 android:layout_gravity="center_vertical"
                 android:textSize="20sp"
-                android:text="设置"
+                android:text="@string/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:text="是否忽略大小写\n 默认忽略"
+                android:text="@string/ignoreCase"
                 android:layout_marginEnd="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
@@ -51,7 +51,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
-
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <!--  拼音搜索-->
         <FrameLayout
             android:foreground="?android:attr/selectableItemBackground"
@@ -59,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:text="是否支持拼音搜索\n 默认支持"
+                android:text="@string/whether_to_support_pinyin_search_support_by_default"
                 android:layout_marginEnd="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
@@ -73,7 +76,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
-
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <!--  默认搜索引擎-->
         <FrameLayout
             android:foreground="?android:attr/selectableItemBackground"
@@ -81,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:text="默认搜索引擎"
+                android:text="@string/default_search_engine"
                 android:layout_marginEnd="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
@@ -94,14 +100,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <TextView
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/add_diy_click"
             android:paddingStart="16dp"
             android:gravity="center_vertical"
-            android:text="添加自定义打开网址"
+            android:text="@string/add_custom_open_url"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <!--  本地app数据自动更新 -->
         <FrameLayout
             android:foreground="?android:attr/selectableItemBackground"
@@ -109,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
             <TextView
-                android:text="打开本地app数据自动更新,每次打开搜索页面时更新"
+                android:text="@string/open_local_app_data_automatically_updated_updated_every_time_they_open_search_page"
                 android:layout_marginEnd="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
@@ -123,15 +137,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <TextView
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/update_app_click"
             android:paddingStart="16dp"
             android:gravity="center_vertical"
-            android:text="更新本地App数据"
+            android:text="@string/update_local_app_data"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
+        <View
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
         <TextView
+            android:visibility="gone"
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/share_click"
             android:paddingStart="16dp"
@@ -140,6 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
         <TextView
+            android:visibility="gone"
             android:background="?android:attr/selectableItemBackground"
             android:id="@+id/about_click"
             android:paddingStart="16dp"

@@ -41,8 +41,12 @@ class SearchInfo {
 
     @ColumnInfo(name = "isDiy")
     var diy = 0; // 是否是用户自己添加的？  0 不是---默认  1 是
+    override fun toString(): String {
+        return "SearchInfo(id=$id, name='$name', packageId='$packageId', appInfo='$appInfo', pinyin='$pinyin', type='$type', webUrl='$webUrl', webClass='$webClass', diy=$diy)"
+    }
 //    @ColumnInfo(name = "icon")
 //    var icon: Drawable? = null; // 图标
+
 
 
 
