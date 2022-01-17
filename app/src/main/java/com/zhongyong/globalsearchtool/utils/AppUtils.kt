@@ -73,7 +73,7 @@ public object AppUtils {
                 searchInfo = SearchInfo();
                 searchInfo.name = name;
                 searchInfo.packageId = info.packageName;
-                searchInfo.appInfo = "版本:" + info.versionName;
+                searchInfo.appInfo = context.getString(R.string.version) + info.versionName;
                 searchInfo.pinyin = pinyin;
                 searchInfo.type = "app";
                 searchInfo.diy = 0;
@@ -107,11 +107,11 @@ public object AppUtils {
 //            val pinyin = Pinyin.toPinyin(name, "")
             searchInfo = SearchInfo();
             searchInfo.webUrl = Utils.getSearchWebUrl(defultSearchEngine,searchText)
-            searchInfo.name = "使用"+name+ defultSearchEngine?.let { it1 ->
+            searchInfo.name = context.getString(R.string.use)+name+ defultSearchEngine?.let { it1 ->
                 getBrowserName(context,
                     it1
                 )
-            } +"搜索: "+searchText;
+            } +context.getString(R.string.search)+":"+searchText;
             searchInfo.packageId = resolveInfo.activityInfo.packageName;
 //            searchInfo.pinyin = pinyin;
             searchInfo.type = "web";

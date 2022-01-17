@@ -7,7 +7,7 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
     <!--    快捷方式相关-->
-    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+<!--    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />-->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
 
     <application

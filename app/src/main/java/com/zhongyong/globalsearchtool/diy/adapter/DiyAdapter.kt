@@ -33,8 +33,9 @@ class DiyAdapter(context: Context) : BaseRecycleAdapter<SearchInfo>(context) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as DiyHolder
-        var info = list[position]
-        holder.getBinding().info = list[position];
+        var info = list[holder.getAdapterPosition()]
+        val i = position;
+        holder.getBinding().info = list[i];
 
         Glide
             .with(mContext)
@@ -48,15 +49,16 @@ class DiyAdapter(context: Context) : BaseRecycleAdapter<SearchInfo>(context) {
 
         holder.getBinding().itemDiyClick.setOnLongClickListener({
             val array: Array<String> = Array(2,{""});
-            array[0] = "编辑"
-            array[1] = "删除"
+            array[0] = mContext.getString(R.string.editor)
+            array[1] = mContext.getString(R.string.delete)
             // 长按编辑及删除
             AlertDialog.Builder(mContext)
                 .setItems(array, DialogInterface.OnClickListener { dialog, which ->
-                    if ("删除".equals(array[which])){
+                    if (array[1].equals(array[which])){
                         // 删除
-                        AlertDialog.Builder(mContext).setMessage("是否删除该条数据?").setNegativeButton("取消",null)
-                            .setPositiveButton("删除", DialogInterface.OnClickListener{dialog,which ->
+                        AlertDialog.Builder(mContext).setMessage(mContext.getString(R.string.delete_this_data)).setNegativeButton(mContext.getString(
+                                                    R.string.cancel),null)
+                            .setPositiveButton(mContext.getString(R.string.delete), DialogInterface.OnClickListener{dialog,which ->
                                 GlobalScope.launch(Dispatchers.IO) {
                                     DbManager.delDiyData(info.name)
                                     DbManager.updateDbData()
@@ -68,11 +70,11 @@ class DiyAdapter(context: Context) : BaseRecycleAdapter<SearchInfo>(context) {
                                     }
                                 }
                             }).show()
-                    }else if ("编辑".equals(array[which])){
+                    }else if (array[0].equals(array[which])){
                         // 去编辑
                         AddDiyDialog.showEditDialog(mContext,info,object :AddDiyDialog.AddDialogCallBack{
                             override fun add(searchInfo: SearchInfo) {
-                                list[position] = searchInfo;
+                                list[i] = searchInfo;
                                 notifyDataSetChanged();
                             }
 

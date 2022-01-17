@@ -103,14 +103,14 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         settingBinding.updateAppClick.setOnClickListener {
             val progressBar = ProgressDialog(this);
-            progressBar.setMessage("正在更新本地APP数据")
+            progressBar.setMessage(getString(R.string.update_local_app_data_is))
             progressBar.show();
             lifecycleScope.launch(Dispatchers.IO) {
                 DbManager.updateDbData()
             }.invokeOnCompletion {
                 lifecycleScope.launch(Dispatchers.Main) {
                     progressBar.dismiss()
-                    Toast.makeText(this@SettingActivity,"更新成功！",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SettingActivity,getString(R.string.update_successful),Toast.LENGTH_SHORT).show()
                 }
 
             }

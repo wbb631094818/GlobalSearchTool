@@ -17,6 +17,17 @@
     <string name="sogou">搜狗</string>
     <string name="so360">360</string>
     <string name="youtube">YouTube</string>
+    <string name="use">使用</string>
+    <string name="search">搜索</string>
+    <string name="update_local_app_data_is">正在更新本地APP数据</string>
+    <string name="update_successful">更新成功！</string>
+    <string name="custom_settings">自定义设置</string>
+    <string name="editor">编辑</string>
+    <string name="delete">删除</string>
+    <string name="delete_this_data">是否删除该条数据?</string>
+    <string name="cancel">取消</string>
+    <string name="version">版本:</string>
+    <string name="global_search">全局搜索</string>
 
     <string-array name="search_engine_list">
         <item>1</item>

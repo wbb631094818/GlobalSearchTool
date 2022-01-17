@@ -25,7 +25,7 @@ object Utils {
             shortcutInfoIntent.action = Intent.ACTION_VIEW //action必须设置，不然报错
             val info = ShortcutInfoCompat.Builder(context, "The only id")
                 .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-                .setShortLabel("全局搜索")
+                .setShortLabel(context.getString(R.string.global_search))
                 .setIntent(shortcutInfoIntent)
                 .build()
 
