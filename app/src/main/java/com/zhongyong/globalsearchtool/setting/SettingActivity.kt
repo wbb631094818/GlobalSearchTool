@@ -3,7 +3,6 @@ package com.zhongyong.globalsearchtool.setting
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,7 +18,6 @@ import com.zhongyong.globalsearchtool.utils.AppPreferencesUtils
 import com.zhongyong.globalsearchtool.utils.AppUtils
 import com.zhongyong.globalsearchtool.utils.LogUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -43,7 +41,7 @@ class SettingActivity:AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val browsNmaes: ArrayList<String> = ArrayList();
         var position = 1;
         lifecycleScope.launch(Dispatchers.IO) {
-           val category_names = resources.getStringArray(com.zhongyong.globalsearchtool.R.array.search_engine_list)
+           val category_names = resources.getStringArray(R.array.search_engine_list)
 
             for ((index,info) in category_names.withIndex()) {
                 browsNmaes.add(AppUtils.getBrowserName(this@SettingActivity, info))

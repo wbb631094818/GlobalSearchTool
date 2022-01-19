@@ -1,0 +1,30 @@
+<resources>
+	<string name="app_name">中庸搜索</string>
+	<string name="appwidget_text">例子</string>
+	<string name="add_widget">添加小部件</string>
+	<string name="setting">設置</string>
+	<string name="ignoreCase">是否忽略大小寫\n默認忽略</string>
+	<string name="whether_to_support_pinyin_search_support_by_default">是否支持拼音搜索\n默認支持</string>
+	<string name="default_search_engine">默認搜索引擎</string>
+	<string name="add_custom_open_url">添加自定義打開 URL</string>
+	<string name="open_local_app_data_automatically_updated_updated_every_time_they_open_search_page">開啟本地應用數據自動更新，每次打開應用都會更新</string>
+	<string name="update_local_app_data">更新本地應用數據</string>
+	<string name="modify_the">編輯</string>
+	<string name="baidu">Baidu</string>
+	<string name="google">谷歌</string>
+	<string name="bing">必應</string>
+	<string name="sogou">搜狗</string>
+	<string name="so360">360</string>
+	<string name="youtube">YouTube</string>
+	<string name="use">使用</string>
+	<string name="search">搜索</string>
+	<string name="update_local_app_data_is">更新本地應用數據</string>
+	<string name="update_successful">更新完成！</string>
+	<string name="custom_settings">自定義設置</string>
+	<string name="editor">編輯</string>
+	<string name="delete">刪除</string>
+	<string name="delete_this_data">是否刪除這條數據？</string>
+	<string name="cancel">取消</string>
+	<string name="version">版本：</string>
+	<string name="global_search">全局搜索</string>
+</resources>

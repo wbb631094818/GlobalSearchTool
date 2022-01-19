@@ -11,6 +11,10 @@ import android.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
 import com.zhongyong.globalsearchtool.R
 import com.zhongyong.globalsearchtool.search.bean.SearchInfo
+import android.content.ComponentName
+
+
+
 
 
 /**
@@ -93,10 +97,12 @@ public object AppUtils {
      */
     fun getAllBrows(context: Context, searchText:String) : List<SearchInfo>{
         val packages: MutableList<SearchInfo> = ArrayList()
-        val uri = Uri.parse("http://www.baidu.com")
-        val it = Intent(Intent.ACTION_VIEW, uri)
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+        intent.setData(Uri.parse("http://"))
         // 通过查询，获得所有ResolveInfo对象.
-        val resolveInfos:List<ResolveInfo> = context.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        val resolveInfos:List<ResolveInfo> = getBrowserList(context);
+//        context.packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
         var searchInfo:SearchInfo;
         val lastBrowser = AppPreferencesUtils.getLastDefultBrowser()
             ?.let { it1 -> AppUtils.getBrowserName(context, it1) };
@@ -129,12 +135,13 @@ public object AppUtils {
      *
      * @param context
      */
-    fun getAllBrows(context: Context?) : List<SearchInfo>{
+    fun getAllBrows(context: Context) : List<SearchInfo>{
         val packages: MutableList<SearchInfo> = ArrayList()
         val uri = Uri.parse("http://www.baidu.com")
         val it = Intent(Intent.ACTION_VIEW, uri)
         // 通过查询，获得所有ResolveInfo对象.
-        val resolveInfos:List<ResolveInfo> = context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        val resolveInfos:List<ResolveInfo> = getBrowserList(context);
+//            context?.packageManager?.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
         var searchInfo:SearchInfo;
         for (resolveInfo in resolveInfos) {
             val name = context.getPackageManager().getApplicationLabel(resolveInfo.activityInfo.applicationInfo)
@@ -194,4 +201,22 @@ public object AppUtils {
             }
         }
     }
+
+    public fun getBrowserList(context: Context): List<ResolveInfo>{
+        val packageManager = context.packageManager
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+        intent.data = Uri.parse("http://")
+        val activities = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+//        val r0 = activities[0]
+//        val activity_iter: Iterator<ResolveInfo> = activities.iterator()
+//        while (activity_iter.hasNext()) {
+//            val resolveInfo = activity_iter.next()
+//            if (r0.priority != resolveInfo.priority || r0.isDefault != resolveInfo.isDefault) {
+//                activities.remove(resolveInfo)
+//            }
+//        }
+        return activities
+    }
+
 }
