@@ -126,10 +126,10 @@ class SearchActivity : AppCompatActivity(), Filterable {
 
     private fun getAllAppInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
-            LogUtils.e("开始");
+//            LogUtils.e("开始");
             info = DbManager.getAllAppData();
-            LogUtils.e( "结束")
-            LogUtils.e(info[0].toString())
+//            LogUtils.e( "结束")
+//            LogUtils.e(info[0].toString())
             if (AppPreferencesUtils.isAppAutoUpdate()){
                 info = updateDbData(info)
             }
